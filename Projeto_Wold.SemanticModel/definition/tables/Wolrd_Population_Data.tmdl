@@ -1,0 +1,158 @@
+table Wolrd_Population_Data
+	lineageTag: 1290cfc3-b5aa-4227-9295-0cdd02ae99cb
+
+	column Rank
+		dataType: string
+		lineageTag: fa3f0614-0584-4fca-a8fa-c7c846e223ef
+		dataCategory: Barcode
+		summarizeBy: none
+		sourceColumn: Rank
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 8b8c84ba-fca6-46b2-a441-d6d83d18e8e1
+		dataCategory: Country
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Population (2024)'
+		dataType: int64
+		formatString: 0
+		lineageTag: fc4edf63-ff60-44c0-b0e7-f386be3253a6
+		summarizeBy: sum
+		sourceColumn: Population (2024)
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mudanca_Anual%
+		dataType: double
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: b16e84e9-818c-4f4f-82fa-fd02896ec077
+		summarizeBy: sum
+		sourceColumn: Mudanca_Anual%
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mudanca_Liquida
+		dataType: int64
+		formatString: 0
+		lineageTag: afc3f0e1-575b-45a8-8abe-f544f79d44d5
+		summarizeBy: sum
+		sourceColumn: Mudanca_Liquida
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Density (P/KmÂ²)'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4020266a-824d-4829-91d7-9a09191daff7
+		summarizeBy: sum
+		sourceColumn: Density (P/KmÂ²)
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' Area (KmÂ²)'
+		dataType: int64
+		formatString: 0
+		lineageTag: 2b0cb4f3-ae8f-4cd4-9c55-f89e6a5a16d2
+		summarizeBy: sum
+		sourceColumn: " Area (KmÂ²)"
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Migrants (net)'
+		dataType: int64
+		formatString: 0
+		lineageTag: e055f29f-c18c-412b-939c-9bdc7fc5dd07
+		summarizeBy: sum
+		sourceColumn: Migrants (net)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fert. Rate'
+		dataType: double
+		formatString: 0.0
+		lineageTag: add5f2a7-c2b7-4385-976e-1cba3c19190e
+		summarizeBy: sum
+		sourceColumn: Fert. Rate
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Med. Age'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3c3c3529-2528-4863-b165-54125cc36186
+		summarizeBy: sum
+		sourceColumn: Med. Age
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Urban Pop %'
+		dataType: double
+		formatString: 0%;-0%;0%
+		lineageTag: 22713f5e-9477-42a4-b659-38bb28dc7357
+		summarizeBy: sum
+		sourceColumn: Urban Pop %
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'World Share'
+		dataType: double
+		lineageTag: d8ce8d34-21a2-4def-bf20-d67cb7f112d3
+		summarizeBy: sum
+		sourceColumn: World Share
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Density_Pop = DIVIDE(Wolrd_Population_Data[Population (2024)],Wolrd_Population_Data[ Area (KmÂ²)])
+		formatString: 0
+		lineageTag: e836623c-cf94-4740-bb44-aeed189b47ed
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column Min_Dens_Pop = MIN(Wolrd_Population_Data[Density_Pop])
+		lineageTag: 3ece3c56-c64b-474d-9e10-5370b202e6c7
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Max_Dens_Pop = MAX(Wolrd_Population_Data[Density_Pop])
+		lineageTag: 5145f617-4ab6-46d4-84b1-80e62e63cac2
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Wolrd_Population_Data = m
+		mode: import
+		source =
+				let
+				    Fonte = Excel.Workbook(File.Contents("C:\Users\marib\OneDrive\Desktop\Wold\Wolrd Population Data.xlsx"), null, true),
+				    Wolrd_Population_Data_Table = Fonte{[Item="Wolrd_Population_Data",Kind="Table"]}[Data],
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Wolrd_Population_Data_Table,{{"Rank", Int64.Type}, {"Country", type text}, {"Population (2024)", Int64.Type}, {"Mudanca_Anual", type number}, {"Mudanca_Liquida", Int64.Type}, {"Density (P/KmÂ²)", Int64.Type}, {" Area (KmÂ²)", Int64.Type}, {"Migrants (net)", Int64.Type}, {"Fert. Rate", type number}, {"Med. Age", Int64.Type}, {"Urban Pop %", type number}, {"World Share", type number}}),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Tipo Alterado",{{"Mudanca_Anual", "Mudanca_Anual%"}}),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Colunas Renomeadas",{{"Mudanca_Anual%", Percentage.Type}})
+				in
+				    #"Tipo Alterado1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+
