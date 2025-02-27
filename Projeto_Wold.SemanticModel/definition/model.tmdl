@@ -6,7 +6,7 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-annotation PBI_QueryOrder = ["Wolrd_Population_Data","Continent"]
+annotation PBI_QueryOrder = ["Wolrd_Population_Data","Continentes1"]
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
@@ -15,7 +15,7 @@ annotation PBIDesktopVersion = 2.140.1205.0 (25.02)+2ab3defe107764e1cf486b42122d
 annotation PBI_ProTooling = ["DevMode"]
 
 ref table Wolrd_Population_Data
-ref table Continent
+ref table Continentes1
 
 ref cultureInfo en-US
 
