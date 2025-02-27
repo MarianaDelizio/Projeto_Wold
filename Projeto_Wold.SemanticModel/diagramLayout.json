@@ -19,6 +19,19 @@
             "width": 234
           },
           "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 629,
+            "y": 0
+          },
+          "nodeIndex": "Continent",
+          "nodeLineageTag": "cace5d02-1df9-41ee-9951-aab827c98aa2",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
         }
       ],
       "name": "Todas as tabelas",

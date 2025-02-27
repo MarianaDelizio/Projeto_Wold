@@ -1,0 +1,31 @@
+table Continent
+	lineageTag: cace5d02-1df9-41ee-9951-aab827c98aa2
+
+	column Country
+		dataType: string
+		lineageTag: 1d31fdfb-140e-4532-8fa7-36f592bf4031
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Continent
+		dataType: string
+		lineageTag: 25d3ba8a-fd96-48d3-b284-378d7bf904a7
+		summarizeBy: none
+		sourceColumn: Continent
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Continent = m
+		mode: import
+		source =
+				let
+				    Fonte = Excel.Workbook(File.Contents("C:\Users\marib\OneDrive\Desktop\Wold\Wolrd Population Data.xlsx"), null, true),
+				    Continent_Table = Fonte{[Item="Continent",Kind="Table"]}[Data],
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Continent_Table,{{"Country", type text}, {"Continent", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+

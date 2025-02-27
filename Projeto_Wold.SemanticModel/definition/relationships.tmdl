@@ -1,0 +1,6 @@
+relationship AutoDetected_5c177755-8e6b-4daa-9f3c-5e29f9424f9f
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Continent.Country
+	toColumn: Wolrd_Population_Data.Country
+
