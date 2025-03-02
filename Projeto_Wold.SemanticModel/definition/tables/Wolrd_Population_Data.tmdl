@@ -125,16 +125,22 @@ table Wolrd_Population_Data
 		annotation PBI_FormatHint = {"isDecimal":true}
 
 	column Min_Dens_Pop = MIN(Wolrd_Population_Data[Density_Pop])
+		isHidden
 		lineageTag: 3ece3c56-c64b-474d-9e10-5370b202e6c7
 		summarizeBy: sum
+
+		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	column Max_Dens_Pop = MAX(Wolrd_Population_Data[Density_Pop])
+		isHidden
 		lineageTag: 5145f617-4ab6-46d4-84b1-80e62e63cac2
 		summarizeBy: sum
+
+		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
 
